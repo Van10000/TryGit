@@ -1,0 +1,15 @@
+C:\Users\ISmir\Downloads\Cvarc\Cvarc\Geometry\bin\Debug\Geometry.dll
+C:\Users\ISmir\Downloads\Cvarc\Cvarc\Geometry\bin\Debug\Geometry.pdb
+C:\Users\ISmir\Downloads\Cvarc\Cvarc\Geometry\obj\Debug\Geometry.dll
+C:\Users\ISmir\Downloads\Cvarc\Cvarc\Geometry\obj\Debug\Geometry.pdb
+C:\Users\ISmir\Downloads\Cvarc\Cvarc\Geometry\obj\Debug\Geometry.csprojResolveAssemblyReference.cache
+C:\Users\ISmir\Downloads\cvarc_x64\Cvarc\PudgeClient\Geometry\bin\Debug\Geometry.dll
+C:\Users\ISmir\Downloads\cvarc_x64\Cvarc\PudgeClient\Geometry\bin\Debug\Geometry.pdb
+C:\Users\ISmir\Downloads\cvarc_x64\Cvarc\PudgeClient\Geometry\obj\Debug\Geometry.csprojResolveAssemblyReference.cache
+C:\Users\ISmir\Downloads\cvarc_x64\Cvarc\PudgeClient\Geometry\obj\Debug\Geometry.dll
+C:\Users\ISmir\Downloads\cvarc_x64\Cvarc\PudgeClient\Geometry\obj\Debug\Geometry.pdb
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\cvarc_x64\Cvarc\PudgeClient\Geometry\bin\Debug\Geometry.dll
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\cvarc_x64\Cvarc\PudgeClient\Geometry\bin\Debug\Geometry.pdb
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\cvarc_x64\Cvarc\PudgeClient\Geometry\obj\Debug\Geometry.csprojResolveAssemblyReference.cache
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\cvarc_x64\Cvarc\PudgeClient\Geometry\obj\Debug\Geometry.dll
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\cvarc_x64\Cvarc\PudgeClient\Geometry\obj\Debug\Geometry.pdb

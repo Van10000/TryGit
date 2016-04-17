@@ -1,0 +1,4 @@
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\cvarc_x64\Cvarc\PudgeClient\Geometry\bin\Release\Geometry.dll
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\cvarc_x64\Cvarc\PudgeClient\Geometry\bin\Release\Geometry.pdb
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\cvarc_x64\Cvarc\PudgeClient\Geometry\obj\Release\Geometry.dll
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\cvarc_x64\Cvarc\PudgeClient\Geometry\obj\Release\Geometry.pdb

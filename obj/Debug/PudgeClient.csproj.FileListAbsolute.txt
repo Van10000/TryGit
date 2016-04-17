@@ -1,0 +1,26 @@
+G:\1.Пр\Практика 21-22\Cvarc\PudgeClient\bin\Debug\PudgeClient.exe.config
+G:\1.Пр\Практика 21-22\Cvarc\PudgeClient\bin\Debug\PudgeClient.exe
+G:\1.Пр\Практика 21-22\Cvarc\PudgeClient\bin\Debug\PudgeClient.pdb
+G:\1.Пр\Практика 21-22\Cvarc\PudgeClient\bin\Debug\CVARC.Core.dll
+G:\1.Пр\Практика 21-22\Cvarc\PudgeClient\bin\Debug\Geometry.dll
+G:\1.Пр\Практика 21-22\Cvarc\PudgeClient\bin\Debug\Infrastructure.dll
+G:\1.Пр\Практика 21-22\Cvarc\PudgeClient\bin\Debug\Newtonsoft.Json.dll
+G:\1.Пр\Практика 21-22\Cvarc\PudgeClient\bin\Debug\Pudge.dll
+G:\1.Пр\Практика 21-22\Cvarc\PudgeClient\bin\Debug\Geometry.pdb
+G:\1.Пр\Практика 21-22\Cvarc\PudgeClient\bin\Debug\Newtonsoft.Json.xml
+G:\1.Пр\Практика 21-22\Cvarc\PudgeClient\obj\Debug\PudgeClient.csprojResolveAssemblyReference.cache
+G:\1.Пр\Практика 21-22\Cvarc\PudgeClient\obj\Debug\PudgeClient.exe
+G:\1.Пр\Практика 21-22\Cvarc\PudgeClient\obj\Debug\PudgeClient.pdb
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\Cvarc\PudgeClient\bin\Debug\PudgeClient.exe.config
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\Cvarc\PudgeClient\obj\Debug\PudgeClient.exe
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\Cvarc\PudgeClient\obj\Debug\PudgeClient.pdb
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\Cvarc\PudgeClient\bin\Debug\PudgeClient.exe
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\Cvarc\PudgeClient\bin\Debug\PudgeClient.pdb
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\Cvarc\PudgeClient\bin\Debug\CVARC.Core.dll
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\Cvarc\PudgeClient\bin\Debug\Geometry.dll
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\Cvarc\PudgeClient\bin\Debug\Infrastructure.dll
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\Cvarc\PudgeClient\bin\Debug\Newtonsoft.Json.dll
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\Cvarc\PudgeClient\bin\Debug\Pudge.dll
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\Cvarc\PudgeClient\bin\Debug\Geometry.pdb
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\Cvarc\PudgeClient\bin\Debug\Newtonsoft.Json.xml
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\Cvarc\PudgeClient\obj\Debug\PudgeClient.csprojResolveAssemblyReference.cache
