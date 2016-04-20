@@ -45,7 +45,7 @@ namespace PudgeClient
             var port = int.Parse(args[1]);
 
             // Каждую неделю клиент будет новый. Соотетственно Level1, Level2 и Level3.
-            var client = new PudgeClientLevel2();
+            var client = new PudgeClientLevel3();
 
             // У этого метода так же есть необязательные аргументы:
             // timeLimit -- время в секундах, сколько будет идти матч (по умолчанию 90)

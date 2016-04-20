@@ -17,12 +17,13 @@ namespace PudgeClient
         public const int maxCoord = 170;
         public const int minCoord = -maxCoord;
         public const double defaultWait = 0.1;
+        public const int pathSplitPiecesCount = 4;
         const int step = 5;
         public bool hooked = false;
         private int counter = 0;
         private Graph graph;
         private PudgeSensorsData data;
-        private PudgeClientLevel2 client;
+        private PudgeClientLevel3 client;
         private Location Location => new Location(data.SelfLocation);
         private SeenNetwork seenNetwork = new SeenNetwork(minCoord, maxCoord, step, PudgeRules.Current.VisibilityRadius);
         private PathFinder pathFinder;
@@ -30,7 +31,7 @@ namespace PudgeClient
         private Dictionary<string, Action<Command>> executeCommand;
         private SmartStrategy smartStrategy = null;
 
-        public Mover(Graph graph, PudgeSensorsData data, PudgeClientLevel2 client)
+        public Mover(Graph graph, PudgeSensorsData data, PudgeClientLevel3 client)
         {
             pathFinder = new PathFinder(graph);
             graphUpdater = new GraphUpdater(graph);
@@ -58,7 +59,7 @@ namespace PudgeClient
                 UpdateData(client.Wait(PudgeRules.Current.PudgeRespawnTime));
             if (smartStrategy != null)
                 smartStrategy.data = data;
-            //graphUpdater.Update(data);
+            graphUpdater.Update(data);
         }
 
         public void Run(Strategy strategy)
@@ -88,9 +89,9 @@ namespace PudgeClient
         {
             client.Rotate(Location.GetTurnAngle(to));
             UpdateData((client.Move(Location.GetDistance(to))));
-            //var rune = graph.TryGetRune(to);
-            //if (!Object.ReferenceEquals(rune, null))
-            //    rune.visited = true;
+            var rune = graph.TryGetRune(to);
+            if (!Object.ReferenceEquals(rune, null))
+                rune.visited = true;
         }
 
         void ExecuteHook(Point to)

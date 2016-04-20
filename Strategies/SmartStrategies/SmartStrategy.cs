@@ -19,7 +19,7 @@ namespace PudgeClient
             var minimum = double.PositiveInfinity;
             Rune best = null;
             //not linq just to make it faster
-            foreach (var rune in graph.runes)
+            foreach (var rune in graph.runes.Where(x => !x.visited))
             {
                 var now = rune.GetDistance(Location) / rune.prior;
                 if (minimum > now)

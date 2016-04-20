@@ -72,6 +72,8 @@
     <Compile Include="Commands\LongMoveCommand.cs" />
     <Compile Include="Commands\MoveAndReturnCommand.cs" />
     <Compile Include="Strategies\FourSlardarsStrategy.cs" />
+    <Compile Include="Strategies\SmartStrategies\SimpleSmartStrategy.cs" />
+    <Compile Include="Strategies\SmartStrategies\SmartStrategy.cs" />
     <Compile Include="Strategies\Strategy.cs" />
     <Compile Include="Commands\MoveCommand.cs" />
     <Compile Include="Mover.cs" />

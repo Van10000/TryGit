@@ -24,6 +24,8 @@ namespace PudgeClient
     {
         Graph graph;
         List<Node> touched = new List<Node>();
+        private List<Point> currentPath;
+        private int currentPointNumber;
 
         public PathFinder(Graph graph)
         {
@@ -32,18 +34,20 @@ namespace PudgeClient
 
         public Point GetNextPoint(Location location, Point destination)
         {
+            if (currentPath == null || currentPath.Count <= currentPointNumber ||
+                currentPath[currentPointNumber] != location || currentPath.Last() != destination)
+            {
+                var currentDestination = ProcessDijkstra(location, destination);
+                currentPath = GetPath(location, currentDestination);
+                currentPointNumber = 0;
+            }
             if (graph[location] == null)
                 return destination;
-            /*if (destination == previousDestination)
-                return GetWay(location, previousDestination)[0];*/
-            var currentDestination = ProcessDijkstra(location, destination);
-            var way = GetWay(location, currentDestination);
-            if (way.Count == 0)
-                return graph.GetClosestNode(location);
-            return way[0];
+            currentPointNumber++;
+            return currentPath[currentPointNumber - 1];
         }
 
-        public List<Point> GetWay(Point start, Node destination)
+        public List<Point> GetPath(Point start, Node destination)
         {
             var current = destination;
             var way = new List<Point>();
