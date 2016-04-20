@@ -18,7 +18,6 @@ namespace PudgeClient
         public const int minCoord = -maxCoord;
         public const double defaultWait = 0.1;
         const int step = 5;
-        private Decider decider;
         public bool hooked = false;
         private int counter = 0;
         private Graph graph;
@@ -29,10 +28,10 @@ namespace PudgeClient
         private PathFinder pathFinder;
         private GraphUpdater graphUpdater;
         private Dictionary<string, Action<Command>> executeCommand;
+        private SmartStrategy smartStrategy = null;
 
         public Mover(Graph graph, PudgeSensorsData data, PudgeClientLevel2 client)
         {
-            decider = new Decider(graph, data, seenNetwork);
             pathFinder = new PathFinder(graph);
             graphUpdater = new GraphUpdater(graph);
             graphUpdater.Update(data);
@@ -55,15 +54,18 @@ namespace PudgeClient
         public void UpdateData(PudgeSensorsData data)
         {
             this.data = data;
-            decider.data = data;
-            while (data.IsDead)
+            if (data.IsDead)
                 UpdateData(client.Wait(PudgeRules.Current.PudgeRespawnTime));
+            if (smartStrategy != null)
+                smartStrategy.data = data;
             //graphUpdater.Update(data);
         }
 
-        public void Run(Strategy controller)
+        public void Run(Strategy strategy)
         {
-            foreach (var command in controller.Commands)
+            if (strategy is SmartStrategy)
+                smartStrategy = strategy as SmartStrategy;
+            foreach (var command in strategy.Commands)
                 ExecuteCommand(command);
         }
 

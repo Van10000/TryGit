@@ -23,4 +23,3 @@ C:\Users\ISmir\Documents\Visual Studio 2015\Projects\Cvarc\PudgeClient\bin\Debug
 C:\Users\ISmir\Documents\Visual Studio 2015\Projects\Cvarc\PudgeClient\bin\Debug\Pudge.dll
 C:\Users\ISmir\Documents\Visual Studio 2015\Projects\Cvarc\PudgeClient\bin\Debug\Geometry.pdb
 C:\Users\ISmir\Documents\Visual Studio 2015\Projects\Cvarc\PudgeClient\bin\Debug\Newtonsoft.Json.xml
-C:\Users\ISmir\Documents\Visual Studio 2015\Projects\Cvarc\PudgeClient\obj\Debug\PudgeClient.csprojResolveAssemblyReference.cache

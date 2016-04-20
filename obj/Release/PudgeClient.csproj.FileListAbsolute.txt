@@ -1,0 +1,13 @@
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\Cvarc\PudgeClient\bin\Release\PudgeClient.exe.config
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\Cvarc\PudgeClient\bin\Release\PudgeClient.exe
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\Cvarc\PudgeClient\bin\Release\PudgeClient.pdb
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\Cvarc\PudgeClient\bin\Release\CVARC.Core.dll
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\Cvarc\PudgeClient\bin\Release\Geometry.dll
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\Cvarc\PudgeClient\bin\Release\Infrastructure.dll
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\Cvarc\PudgeClient\bin\Release\Newtonsoft.Json.dll
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\Cvarc\PudgeClient\bin\Release\Pudge.dll
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\Cvarc\PudgeClient\bin\Release\Geometry.pdb
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\Cvarc\PudgeClient\bin\Release\Newtonsoft.Json.xml
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\Cvarc\PudgeClient\obj\Release\PudgeClient.csprojResolveAssemblyReference.cache
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\Cvarc\PudgeClient\obj\Release\PudgeClient.exe
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\Cvarc\PudgeClient\obj\Release\PudgeClient.pdb
