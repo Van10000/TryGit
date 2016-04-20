@@ -52,14 +52,20 @@ namespace PudgeClient
             };
         }
 
-        public void UpdateData(PudgeSensorsData data)
+        private void UpdateDataUnsafe(PudgeSensorsData data)
         {
             this.data = data;
-            if (data.IsDead)
-                UpdateData(client.Wait(PudgeRules.Current.PudgeRespawnTime));
             if (smartStrategy != null)
                 smartStrategy.data = data;
             graphUpdater.Update(data);
+        }
+
+        public void UpdateData(PudgeSensorsData data)
+        {
+            if (data.IsDead)
+                UpdateDataUnsafe(client.Wait(PudgeRules.Current.PudgeRespawnTime));
+            else
+                UpdateDataUnsafe(data);
         }
 
         public void Run(Strategy strategy)
