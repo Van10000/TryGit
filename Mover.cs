@@ -144,10 +144,18 @@ namespace PudgeClient
             while (to != Location)
             {
                 ExecuteMove(pathFinder.GetNextPoint(Location, to));
-                var target = data.Map.Heroes.Select(hero => new Point(hero.Location.X, hero.Location.Y)).ToList();
+                var target = data.Map.Heroes.GroupBy(hero => hero.Type.ToString())
+                                            .Select(group => new { Type = group.Key, Location = group
+                                                                           .Select(hero => new Point(hero.Location.X, hero.Location.Y))
+                                                                           .ToList()
+                                                                           .First()})
+                                            .ToList();
                 if (target.Any())
                 {
-                    ExecuteHook(target[0]);
+                    foreach (var pudge in target.Where(hero => hero.Type == "Pudge"))
+                        ExecuteHook(pudge.Location);
+                    foreach (var slardar in target.Where(hero => hero.Type == "Slardar"))
+                        ExecuteHook(slardar.Location);
                     hooked = true;
                 }
             }
