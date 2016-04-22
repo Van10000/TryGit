@@ -57,7 +57,7 @@ namespace PudgeClient
             // speedUp -- ускорение отладки в два раза. Может вызывать снижение FPS на слабых машинах
 
             var graph = JsonConvert.DeserializeObject<Graph>(string.Join("", File.ReadAllLines("graph.json")));
-            var data = client.Configurate(ip, port, CvarcTag, speedUp : true);
+            var data = client.Configurate(ip, port, CvarcTag);
             //client.SensorDataReceived += Print;
             var mover = new Mover(graph, data, client);
             mover.Run(new SimpleSmartStrategy(data, graph));

@@ -60,8 +60,9 @@ namespace PudgeClient
             graphUpdater.Update(data);
         }
 
-        public void UpdateData(PudgeSensorsData data)
+        public void UpdateData(PudgeSensorsData data, out bool dead)
         {
+            dead = data.IsDead;
             if (data.IsDead)
                 UpdateDataUnsafe(client.Wait(PudgeRules.Current.PudgeRespawnTime));
             else
