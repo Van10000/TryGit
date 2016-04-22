@@ -22,6 +22,7 @@ namespace PudgeClient
 
     public class PathFinder
     {
+        public const int pathSplitPiecesCount = 4;
         Graph graph;
         List<Node> touched = new List<Node>();
         private List<Point> currentPath;
@@ -32,17 +33,30 @@ namespace PudgeClient
             this.graph = graph;
         }
 
+        public List<Point> SplitPath(List<Point> path, int piecesCount)
+        {
+            List<Point> newPath = new List<Point>();
+            for (int i = 0; i < path.Count - 1; ++i)
+            {
+                var seg = new Segment(path[i], path[i + 1]);
+                for (double ratio = 0.0; ratio < 0.99; ratio += 0.25)
+                    newPath.Add(seg.GetDividingPointByRatio(ratio));
+            }
+            newPath.Add(path.Last());
+            return newPath;
+        }
+
         public Point GetNextPoint(Location location, Point destination)
         {
+            if (graph[location] == null || destination == null)
+                return graph.GetClosestNode(location);
             if (currentPath == null || currentPath.Count <= currentPointNumber ||
                 currentPath[currentPointNumber] != location || currentPath.Last() != destination)
             {
                 var currentDestination = ProcessDijkstra(location, destination);
-                currentPath = GetPath(location, currentDestination);
+                currentPath = SplitPath(GetPath(location, currentDestination), pathSplitPiecesCount);
                 currentPointNumber = 0;
             }
-            if (graph[location] == null)
-                return destination;
             currentPointNumber++;
             return currentPath[currentPointNumber - 1];
         }

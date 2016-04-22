@@ -96,7 +96,7 @@ namespace PudgeClient
             client.Rotate(Location.GetTurnAngle(to));
             UpdateData((client.Move(Location.GetDistance(to))));
             var rune = graph.TryGetRune(to);
-            if (!Object.ReferenceEquals(rune, null))
+            if (rune != null)
                 rune.visited = true;
         }
 

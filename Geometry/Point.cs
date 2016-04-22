@@ -90,6 +90,8 @@ namespace Geometry
 
         public static bool operator ==(Point A, Point B)
         {
+            if (Object.ReferenceEquals(A, B))
+                return true;
             if (Object.ReferenceEquals(A, null) || Object.ReferenceEquals(B, null))
                 return false;
             return ((Math.Abs(A.x - B.x) < GetPrecision()) && (Math.Abs(A.y - B.y) < GetPrecision()));
