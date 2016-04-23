@@ -90,92 +90,106 @@ namespace PudgeClient
             executeCommand[command.GetType().Name](command);
         }
 
-        void ExecuteWait(double time)
+        bool ExecuteWait(double time)
         {
-            UpdateData(client.Wait(time));
+            return UpdateData(client.Wait(time));
         }
 
-        void ExecuteMove(Point to)
+        bool ExecuteMove(Point to)
         {
-            client.Rotate(Location.GetTurnAngle(to));
-            UpdateData(client.Move(Location.GetDistance(to)));
+            if (UpdateData(client.Rotate(Location.GetTurnAngle(to))))
+                return true;
+            if (UpdateData(client.Move(Location.GetDistance(to))))
+                return true;
             var rune = graph.TryGetRune(to);
             if (rune != null)
                 rune.visited = true;
+            return false;
         }
 
-        void ExecuteHook(Point to)
+        bool ExecuteHook(Point to)
         {
             var angle = Location.GetTurnAngle(to);
             if (Math.Abs(angle) > 0.001)
-                UpdateData(client.Rotate(angle));
-            UpdateData(client.Hook());
-            ExecuteWaitHook();
+                if (UpdateData(client.Rotate(angle)))
+                    return true;
+            if (UpdateData(client.Hook()))
+                return true;
+            return ExecuteWaitHook();
         }
 
-        void ExecuteHookAround()
+        bool ExecuteHookAround()
         {
             while (true)
             {
                 while (data.Events.Select(x => x.Event).Contains(PudgeEvent.HookCooldown))
-                    ExecuteWait(defaultWait);
+                    if (ExecuteWait(defaultWait))
+                        return true;
                 foreach (var hero in data.Map.Heroes)
-                {
-                    ExecuteHook(new Point(hero.Location.X, hero.Location.Y));
-                    return;
-                }
-                ExecuteWait(defaultWait);
+                    return ExecuteHook(new Point(hero.Location.X, hero.Location.Y));
+                if (ExecuteWait(defaultWait))
+                    return true;
             }
         }
 
-        void ExecuteWaitHook()
+        bool ExecuteWaitHook()
         {
             while (data.Events.Select(x => x.Event).Contains(PudgeEvent.HookThrown))
-                ExecuteWait(defaultWait);
+                if (ExecuteWait(defaultWait))
+                    return true;
+            return false;
         }
 
-        void ExecuteLongMove(Point to)
+        bool ExecuteLongMove(Point to)
         {
             while (to != Location)
             {
-                ExecuteMove(pathFinder.GetNextPoint(Location, to));
+                if (ExecuteMove(pathFinder.GetNextPoint(Location, to)))
+                    return true;
             }
+            return false;
         }
 
-        void ExecuteLongKillMove(Point to, out bool hooked)
+        bool ExecuteLongKillMove(Point to, out bool hooked)
         {
             hooked = this.hooked;
             while (to != Location)
             {
-                ExecuteMove(pathFinder.GetNextPoint(Location, to));
+                if (ExecuteMove(pathFinder.GetNextPoint(Location, to)))
+                    return true;
                 var target = data.Map.Heroes
                     .Select(hero => new {Type = hero.Type.ToString(), Location = new Point(hero.Location.X, hero.Location.Y)} )
                     .ToList();
                 hooked = target.Any();
                 foreach (var pudge in target.Where(hero => hero.Type == "Pudge"))
-                    ExecuteHook(pudge.Location);
+                    if (ExecuteHook(pudge.Location))
+                        return true;
                 bool visible = !data.Events.Select(e => e.Event).Contains(PudgeEvent.Invisible);
                 foreach (var slardar in target.Where(hero => hero.Type == "Slardar"))
                     if (visible || Location.GetDistance(slardar.Location) < criticalAttackDistance)
-                        ExecuteHook(slardar.Location);
+                        if (ExecuteHook(slardar.Location))
+                            return true;
             }
+            return false;
         }
 
-        void ExecuteMeetSlardar(Point meeting)
+        bool ExecuteMeetSlardar(Point meeting)
         {
             ExecuteLongKillMove(meeting, out hooked);
             if (hooked)
-                return;
+                return false;
             while (!data.Map.Heroes.Any())
-                ExecuteWait(defaultWait);
-            ExecuteHookAround();
+                if (ExecuteWait(defaultWait))
+                    return true;
+            return ExecuteHookAround();
         }
 
-        void ExecuteMoveAndReturn(Point to)
+        bool ExecuteMoveAndReturn(Point to)
         {
             var current = Location;
-            ExecuteLongMove(to);
-            ExecuteLongMove(current);
+            if (ExecuteLongMove(to))
+                return true;
+            return ExecuteLongMove(current);
         }
     }
 }
