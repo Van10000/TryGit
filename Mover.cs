@@ -20,6 +20,7 @@ namespace PudgeClient
         public const int pathSplitPiecesCount = 4;
         const int step = 5;
         public bool hooked = false;
+        public bool isDead = false;   ///
         private int counter = 0;
         private Graph graph;
         private PudgeSensorsData data;
@@ -89,13 +90,13 @@ namespace PudgeClient
 
         void ExecuteWait(double time)
         {
-            UpdateData(client.Wait(time));
+            UpdateData(client.Wait(time), out isDead);
         }
 
         void ExecuteMove(Point to)
         {
             client.Rotate(Location.GetTurnAngle(to));
-            UpdateData((client.Move(Location.GetDistance(to))));
+            UpdateData(client.Move(Location.GetDistance(to)), out isDead);
             var rune = graph.TryGetRune(to);
             if (rune != null)
                 rune.visited = true;
@@ -105,8 +106,8 @@ namespace PudgeClient
         {
             var angle = Location.GetTurnAngle(to);
             if (Math.Abs(angle) > 0.001)
-                UpdateData(client.Rotate(angle));
-            UpdateData(client.Hook());
+                UpdateData(client.Rotate(angle), out isDead);
+            UpdateData(client.Hook(), out isDead);
             ExecuteWaitHook();
         }
 
@@ -153,10 +154,11 @@ namespace PudgeClient
                                             .ToList();
                 if (target.Any())
                 {
+                    if (!data.Events.Select(e => e.Event).Contains(PudgeEvent.Invisible))
+                        foreach (var slardar in target.Where(hero => hero.Type == "Slardar"))
+                            ExecuteHook(slardar.Location);
                     foreach (var pudge in target.Where(hero => hero.Type == "Pudge"))
                         ExecuteHook(pudge.Location);
-                    foreach (var slardar in target.Where(hero => hero.Type == "Slardar"))
-                        ExecuteHook(slardar.Location);
                     hooked = true;
                 }
             }
