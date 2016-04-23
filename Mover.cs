@@ -104,8 +104,23 @@ namespace PudgeClient
             return false;
         }
 
+        bool UnderEffect(PudgeEvent e)
+        {
+            return data.Events.Select(x => x.Event).Contains(e);
+        }
+
+        bool ExecuteWaitEvent(PudgeEvent e)
+        {
+            while (UnderEffect(e))
+                if (ExecuteWait(defaultWait))
+                    return true;
+            return false;
+        }
+
         bool ExecuteHook(Point to)
         {
+            if (UnderEffect(PudgeEvent.HookCooldown))
+                return false;
             var angle = Location.GetTurnAngle(to);
             if (Math.Abs(angle) > 0.001)
                 if (UpdateData(client.Rotate(angle)))
@@ -119,9 +134,6 @@ namespace PudgeClient
         {
             while (true)
             {
-                while (data.Events.Select(x => x.Event).Contains(PudgeEvent.HookCooldown))
-                    if (ExecuteWait(defaultWait))
-                        return true;
                 foreach (var hero in data.Map.Heroes)
                     return ExecuteHook(new Point(hero.Location.X, hero.Location.Y));
                 if (ExecuteWait(defaultWait))
@@ -131,10 +143,7 @@ namespace PudgeClient
 
         bool ExecuteWaitHook()
         {
-            while (data.Events.Select(x => x.Event).Contains(PudgeEvent.HookThrown))
-                if (ExecuteWait(defaultWait))
-                    return true;
-            return false;
+            return ExecuteWaitEvent(PudgeEvent.HookThrown);
         }
 
         bool ExecuteLongMove(Point to)
@@ -154,6 +163,8 @@ namespace PudgeClient
             {
                 if (ExecuteMove(pathFinder.GetNextPoint(Location, to)))
                     return true;
+                if (UnderEffect(PudgeEvent.HookCooldown))
+                    continue;
                 var target = data.Map.Heroes
                     .Select(hero => new {Type = hero.Type.ToString(), Location = new Point(hero.Location.X, hero.Location.Y)} )
                     .ToList();
