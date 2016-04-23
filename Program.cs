@@ -3,7 +3,6 @@ using Pudge;
 using Pudge.Player;
 using System.IO;
 using Newtonsoft.Json;
-using System.Timers;
 
 namespace PudgeClient
 {
@@ -58,7 +57,7 @@ namespace PudgeClient
 
             var graph = JsonConvert.DeserializeObject<Graph>(string.Join("", File.ReadAllLines("graph.json")));
             var data = client.Configurate(ip, port, CvarcTag);
-            //client.SensorDataReceived += Print;
+            client.SensorDataReceived += Print;
             var mover = new Mover(graph, data, client);
             mover.Run(new SimpleSmartStrategy(data, graph));
             client.Exit();

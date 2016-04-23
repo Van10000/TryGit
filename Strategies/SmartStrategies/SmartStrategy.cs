@@ -11,8 +11,8 @@ namespace PudgeClient
     public abstract class SmartStrategy : Strategy
     {
         public PudgeSensorsData data;
-        private Graph graph;
-        private Location Location => new Location(data.SelfLocation);
+        public Graph graph;
+        public Location Location => new Location(data.SelfLocation);
 
         public Rune GetClosestRune()
         {

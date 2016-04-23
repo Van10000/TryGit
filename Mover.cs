@@ -18,6 +18,7 @@ namespace PudgeClient
         public const int minCoord = -maxCoord;
         public const double defaultWait = 0.1;
         public const int pathSplitPiecesCount = 4;
+        public const double criticalAttackDistance = 30;
         const int step = 5;
         public bool hooked = false;
         public bool isDead = false;   ///
@@ -61,13 +62,14 @@ namespace PudgeClient
             graphUpdater.Update(data);
         }
 
-        public void UpdateData(PudgeSensorsData data, out bool dead)
+        public bool UpdateData(PudgeSensorsData data)
         {
-            dead = data.IsDead;
+            var ans = data.IsDead;
             if (data.IsDead)
                 UpdateDataUnsafe(client.Wait(PudgeRules.Current.PudgeRespawnTime));
             else
                 UpdateDataUnsafe(data);
+            return ans;
         }
 
         public void Run(Strategy strategy)
@@ -90,13 +92,13 @@ namespace PudgeClient
 
         void ExecuteWait(double time)
         {
-            UpdateData(client.Wait(time), out isDead);
+            UpdateData(client.Wait(time));
         }
 
         void ExecuteMove(Point to)
         {
             client.Rotate(Location.GetTurnAngle(to));
-            UpdateData(client.Move(Location.GetDistance(to)), out isDead);
+            UpdateData(client.Move(Location.GetDistance(to)));
             var rune = graph.TryGetRune(to);
             if (rune != null)
                 rune.visited = true;
@@ -106,8 +108,8 @@ namespace PudgeClient
         {
             var angle = Location.GetTurnAngle(to);
             if (Math.Abs(angle) > 0.001)
-                UpdateData(client.Rotate(angle), out isDead);
-            UpdateData(client.Hook(), out isDead);
+                UpdateData(client.Rotate(angle));
+            UpdateData(client.Hook());
             ExecuteWaitHook();
         }
 
@@ -146,21 +148,16 @@ namespace PudgeClient
             while (to != Location)
             {
                 ExecuteMove(pathFinder.GetNextPoint(Location, to));
-                var target = data.Map.Heroes.GroupBy(hero => hero.Type.ToString())
-                                            .Select(group => new { Type = group.Key, Location = group
-                                                                           .Select(hero => new Point(hero.Location.X, hero.Location.Y))
-                                                                           .ToList()
-                                                                           .First()})
-                                            .ToList();
-                if (target.Any())
-                {
-                    if (!data.Events.Select(e => e.Event).Contains(PudgeEvent.Invisible))
-                        foreach (var slardar in target.Where(hero => hero.Type == "Slardar"))
-                            ExecuteHook(slardar.Location);
-                    foreach (var pudge in target.Where(hero => hero.Type == "Pudge"))
-                        ExecuteHook(pudge.Location);
-                    hooked = true;
-                }
+                var target = data.Map.Heroes
+                    .Select(hero => new {Type = hero.Type.ToString(), Location = new Point(hero.Location.X, hero.Location.Y)} )
+                    .ToList();
+                hooked = target.Any();
+                foreach (var pudge in target.Where(hero => hero.Type == "Pudge"))
+                    ExecuteHook(pudge.Location);
+                bool visible = !data.Events.Select(e => e.Event).Contains(PudgeEvent.Invisible);
+                foreach (var slardar in target.Where(hero => hero.Type == "Slardar"))
+                    if (visible || Location.GetDistance(slardar.Location) < criticalAttackDistance)
+                        ExecuteHook(slardar.Location);
             }
         }
 
