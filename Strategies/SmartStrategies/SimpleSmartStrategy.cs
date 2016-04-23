@@ -17,7 +17,13 @@ namespace PudgeClient
             {
                 while (true)
                 {
-                    yield return new LongKillMoveCommand(GetClosestRune());
+                    var closestRune = GetClosestRune();
+                    if (closestRune != null)
+                        yield return new LongKillMoveCommand(GetClosestRune());
+                    else if (Location != new Point(0, 0))
+                        yield return new LongKillMoveCommand(new Point(0, 0));
+                    else
+                        yield return new WaitCommand(0.1);
                 }
             }
         }

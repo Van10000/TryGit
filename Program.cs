@@ -2,6 +2,7 @@
 using Pudge;
 using Pudge.Player;
 using System.IO;
+using Geometry;
 using Newtonsoft.Json;
 
 namespace PudgeClient
@@ -56,7 +57,9 @@ namespace PudgeClient
             // speedUp -- ускорение отладки в два раза. Может вызывать снижение FPS на слабых машинах
 
             var graph = JsonConvert.DeserializeObject<Graph>(string.Join("", File.ReadAllLines("graph.json")));
-            var data = client.Configurate(ip, port, CvarcTag, operationalTimeLimit : 5);
+            graph.runes.Remove(graph.TryGetRune(new Point(-130, 130)));
+            graph.runes.Remove(graph.TryGetRune(new Point(130, -130)));
+            var data = client.Configurate(ip, port, CvarcTag);
             client.SensorDataReceived += Print;
             var mover = new Mover(graph, data, client);
             mover.Run(new SimpleSmartStrategy(data, graph));

@@ -17,7 +17,7 @@ namespace PudgeClient
         public const int maxCoord = 170;
         public const int minCoord = -maxCoord;
         public const double defaultWait = 0.1;
-        public const double criticalAttackDistance = 20;
+        public const double criticalAttackDistance = 15;
         const int step = 5;
         public bool hooked = false;
         private Graph graph;
@@ -87,7 +87,7 @@ namespace PudgeClient
             executeCommand[command.GetType().Name](command);
         }
 
-        bool ExecuteWait(double time)
+        bool ExecuteWait(double time = defaultWait)
         {
             return UpdateData(client.Wait(time));
         }

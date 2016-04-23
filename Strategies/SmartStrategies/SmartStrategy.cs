@@ -28,9 +28,7 @@ namespace PudgeClient
                     best = rune;
                 }
             }
-            if (best != null)
-                return best;
-            return graph.TryGetRune(new Geometry.Point(0, 0));
+            return best;
         }
 
         public SmartStrategy(PudgeSensorsData data, Graph graph)

@@ -90,7 +90,7 @@ namespace Geometry
 
         public static bool operator ==(Point A, Point B)
         {
-            if (Object.ReferenceEquals(A, B))
+            if (Object.ReferenceEquals(A, null) && Object.ReferenceEquals(B, null))
                 return true;
             if (Object.ReferenceEquals(A, null) || Object.ReferenceEquals(B, null))
                 return false;
