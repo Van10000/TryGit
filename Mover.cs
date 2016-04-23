@@ -17,12 +17,9 @@ namespace PudgeClient
         public const int maxCoord = 170;
         public const int minCoord = -maxCoord;
         public const double defaultWait = 0.1;
-        public const int pathSplitPiecesCount = 4;
-        public const double criticalAttackDistance = 30;
+        public const double criticalAttackDistance = 20;
         const int step = 5;
         public bool hooked = false;
-        public bool isDead = false;   ///
-        private int counter = 0;
         private Graph graph;
         private PudgeSensorsData data;
         private PudgeClientLevel3 client;
