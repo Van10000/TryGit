@@ -161,6 +161,10 @@ namespace PudgeClient
             hooked = this.hooked;
             while (to != Location)
             {
+                if (Location.GetDistance(to) <= PudgeRules.Current.VisibilityRadius &&
+                    !data.Map.Runes.Select(rune => new Point(rune.Location.X, rune.Location.Y)).Contains(to))
+                    if (ExecuteHook(to))
+                        return true;
                 if (ExecuteMove(pathFinder.GetNextPoint(Location, to)))
                     return true;
                 if (UnderEffect(PudgeEvent.HookCooldown))
