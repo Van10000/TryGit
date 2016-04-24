@@ -35,6 +35,7 @@ namespace PudgeClient
             pathFinder = new PathFinder(graph);
             graphUpdater = new GraphUpdater(graph);
             graphUpdater.Update(data);
+            client.SensorDataReceived += x => graphUpdater.UpdateRunes(x);
             this.graph = graph;
             this.data = data;
             this.client = client;
@@ -167,8 +168,12 @@ namespace PudgeClient
             hooked = this.hooked;
             while (to != Location)
             {
-                if (ExecuteMove(pathFinder.GetNextPoint(Location, to)))
+                var aim = pathFinder.GetNextPoint(Location, to);
+                if (ExecuteMove(aim))
                     return true;
+                if (Location != aim)
+                    if (ExecuteHook())
+                        return true;
                 if (UnderEffect(PudgeEvent.HookCooldown))
                     continue;
                 var target = data.Map.Heroes
@@ -180,7 +185,7 @@ namespace PudgeClient
                         return true;
                 bool visible = !data.Events.Select(e => e.Event).Contains(PudgeEvent.Invisible);
                 foreach (var slardar in target.Where(hero => hero.Type == "Slardar"))
-                    if (visible || Location.GetDistance(slardar.Location) < criticalAttackDistance)
+                    if (visible)
                         if (ExecuteHook(slardar.Location))
                             return true;
             }

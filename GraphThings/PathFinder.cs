@@ -22,7 +22,7 @@ namespace PudgeClient
 
     public class PathFinder
     {
-        public const int pathSplitPiecesCount = 10;
+        public const int pathSplitPiecesCount = 5;
         Graph graph;
         List<Node> touched = new List<Node>();
         private List<Point> currentPath;
@@ -48,17 +48,38 @@ namespace PudgeClient
 
         public Point GetNextPoint(Location location, Point destination)
         {
-            if (graph[location] == null || destination == null)
+            if (destination == null)
                 return graph.GetClosestNode(location);
-            if (currentPath == null || currentPath.Count <= currentPointNumber ||
-                currentPath[currentPointNumber] != location || currentPath.Last() != destination)
+            if (currentPath == null)
             {
-                var currentDestination = ProcessDijkstra(location, destination);
-                currentPath = SplitPath(GetPath(location, currentDestination), pathSplitPiecesCount);
-                currentPointNumber = 0;
+                if (graph[location] != null)
+                {
+                    var currentDestination = ProcessDijkstra(location, destination);
+                    currentPath = SplitPath(GetPath(location, currentDestination), pathSplitPiecesCount);
+                    return currentPath[1];
+                }
+                else
+                {
+                    return graph.GetClosestNode(location);
+                }
             }
-            currentPointNumber++;
-            return currentPath[currentPointNumber - 1];
+            int index = currentPath.FindIndex(x => x == location);
+            if (index != -1 && currentPath.Count > index + 1)
+                return currentPath[index + 1];
+            else
+            {
+                if (graph[location] != null)
+                {
+                    var currentDestination = ProcessDijkstra(location, destination);
+                    currentPath = SplitPath(GetPath(location, currentDestination), pathSplitPiecesCount);
+                    return currentPath[1];
+                }
+                else
+                {
+                    currentPath = null;
+                    return graph.GetClosestNode(location);
+                }
+            }
         }
 
         public List<Point> GetPath(Point start, Node destination)
@@ -70,6 +91,7 @@ namespace PudgeClient
                 way.Add(current);
                 current = current.Ancestor;
             }
+            way.Add(start);
             way.Reverse();
             return way;
         }

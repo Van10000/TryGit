@@ -12,20 +12,23 @@ namespace PudgeClient
     public class GraphUpdater
     {
         private Graph graph;
+        private int count = 0;
 
         public GraphUpdater(Graph graph)
         {
             this.graph = graph;
-            var timer = new Timer(PudgeRules.Current.RuneRespawnTime * 333);
-            timer.AutoReset = true;
-            timer.Start();
-            timer.Elapsed += ((sender, args) => UpdateRunes());
         }
 
-        public void UpdateRunes()
+        public void UpdateRunes(PudgeSensorsData data)
         {
-            foreach (var rune in graph.runes)
-                rune.visited = false;
+            int nowCount = (int)Math.Floor(data.WorldTime / PudgeRules.Current.RuneRespawnTime);
+            if (nowCount > count)
+            {
+                count++;
+                foreach (var rune in graph.runes)
+                    rune.visited = false;
+            }
+
         }
 
         public void Update(PudgeSensorsData data)
