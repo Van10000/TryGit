@@ -15,7 +15,7 @@ namespace PudgeClient
         // Если какая-то информация кажется вам лишней, можете закомментировать что-нибудь.
         static void Print(PudgeSensorsData data)
         {
-            Console.WriteLine("---------------------------------");
+            /*Console.WriteLine("---------------------------------");
             if (data.IsDead)
             {
                 // Правильное обращение со смертью.
@@ -23,9 +23,9 @@ namespace PudgeClient
                 return;
             }
             Console.WriteLine("I'm here: " + data.SelfLocation);
-            Console.WriteLine("My score now: {0}", data.SelfScores);
+            Console.WriteLine("My score now: {0}", data.SelfScores);*/
             Console.WriteLine("Current time: {0:F}", data.WorldTime);
-            foreach (var rune in data.Map.Runes)
+            /*foreach (var rune in data.Map.Runes)
                 Console.WriteLine("Rune! Type: {0}, Size = {1}, Location: {2}", rune.Type, rune.Size, rune.Location);
             foreach (var heroData in data.Map.Heroes)
                 Console.WriteLine("Enemy! Type: {0}, Location: {1}, Angle: {2:F}", heroData.Type, heroData.Location, heroData.Angle); 
@@ -33,7 +33,7 @@ namespace PudgeClient
                 Console.WriteLine("I'm under effect: {0}, Duration: {1}", eventData.Event,
                     eventData.Duration - (data.WorldTime - eventData.Start));
             Console.WriteLine("---------------------------------");
-            Console.WriteLine();
+            Console.WriteLine();*/
         }
 
         static void Main(string[] args)
@@ -59,7 +59,7 @@ namespace PudgeClient
             var graph = JsonConvert.DeserializeObject<Graph>(string.Join("", File.ReadAllLines("graph.json")));
             graph.runes.Remove(graph.TryGetRune(new Point(-130, 130)));
             graph.runes.Remove(graph.TryGetRune(new Point(130, -130)));
-            var data = client.Configurate(ip, port, CvarcTag);
+            var data = client.Configurate(ip, port, CvarcTag, operationalTimeLimit : 5);
             client.SensorDataReceived += Print;
             var mover = new Mover(graph, data, client);
             mover.Run(new SimpleSmartStrategy(data, graph));

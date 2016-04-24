@@ -171,9 +171,6 @@ namespace PudgeClient
                 var aim = pathFinder.GetNextPoint(Location, to);
                 if (ExecuteMove(aim))
                     return true;
-                if (Location != aim)
-                    if (ExecuteHook())
-                        return true;
                 if (UnderEffect(PudgeEvent.HookCooldown))
                     continue;
                 var target = data.Map.Heroes
@@ -185,7 +182,7 @@ namespace PudgeClient
                         return true;
                 bool visible = !data.Events.Select(e => e.Event).Contains(PudgeEvent.Invisible);
                 foreach (var slardar in target.Where(hero => hero.Type == "Slardar"))
-                    if (visible)
+                    if (visible || Location.GetDistance(slardar.Location) < criticalAttackDistance)
                         if (ExecuteHook(slardar.Location))
                             return true;
             }
