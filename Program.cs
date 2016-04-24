@@ -39,8 +39,8 @@ namespace PudgeClient
         static void Main(string[] args)
         {
             if (args.Length == 0)
-                args = new[] { "87.224.245.130", "14001" };
-                //args = new[] {"127.0.0.1", "14000"};
+                //args = new[] { "87.224.245.130", "14001" };
+                args = new[] {"127.0.0.1", "14000"};
             var ip = args[0];
             var port = int.Parse(args[1]);
 

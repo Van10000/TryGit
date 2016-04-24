@@ -15,6 +15,9 @@ namespace PudgeClient
         {
             get
             {
+                //yield return new MoveCommand(new Point(-40, -40));
+                //yield return new HookAroundCommand(10);
+                //yield return new MoveCommand(new Point(0, 0));
                 while (true)
                 {
                     var closestRune = GetClosestRune();

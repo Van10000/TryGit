@@ -22,7 +22,7 @@ namespace PudgeClient
 
     public class PathFinder
     {
-        public const int pathSplitPiecesCount = 4;
+        public const int pathSplitPiecesCount = 10;
         Graph graph;
         List<Node> touched = new List<Node>();
         private List<Point> currentPath;
@@ -39,7 +39,7 @@ namespace PudgeClient
             for (int i = 0; i < path.Count - 1; ++i)
             {
                 var seg = new Segment(path[i], path[i + 1]);
-                for (double ratio = 0.0; ratio < 0.99; ratio += 0.25)
+                for (double ratio = 0.0; ratio < 0.99; ratio += 1.0/pathSplitPiecesCount)
                     newPath.Add(seg.GetDividingPointByRatio(ratio));
             }
             newPath.Add(path.Last());

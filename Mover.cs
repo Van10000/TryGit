@@ -46,7 +46,7 @@ namespace PudgeClient
                 { LongMoveCommand.TypeName, x => ExecuteLongMove((x as LongMoveCommand).Destination)},
                 { LongKillMoveCommand.TypeName, x => ExecuteLongKillMove((x as LongKillMoveCommand).Destination, out hooked)},
                 { MoveAndReturnCommand.TypeName, x => ExecuteMoveAndReturn((x as MoveAndReturnCommand).Destination)},
-                { HookAroundCommand.TypeName, x =>  ExecuteHookAround()},
+                { HookAroundCommand.TypeName, x =>  ExecuteHookAround((x as HookAroundCommand).IterCount)},
                 { MeetSlardarCommand.TypeName, x => ExecuteMeetSlardar((x as MeetSlardarCommand).Destination) }
             };
         }
@@ -130,15 +130,16 @@ namespace PudgeClient
             return ExecuteWaitHook();
         }
 
-        bool ExecuteHookAround()
+        bool ExecuteHookAround(int iteartionsCount=int.MaxValue)
         {
-            while (true)
+            for (int i = 0; i < iteartionsCount; ++i)
             {
                 foreach (var hero in data.Map.Heroes)
                     return ExecuteHook(new Point(hero.Location.X, hero.Location.Y));
                 if (ExecuteWait(defaultWait))
                     return true;
             }
+            return false;
         }
 
         bool ExecuteWaitHook()
@@ -156,15 +157,16 @@ namespace PudgeClient
             return false;
         }
 
+        bool ExecuteHook()
+        {
+            return UpdateData(client.Hook());
+        }
+
         bool ExecuteLongKillMove(Point to, out bool hooked)
         {
             hooked = this.hooked;
             while (to != Location)
             {
-                if (Location.GetDistance(to) <= PudgeRules.Current.VisibilityRadius &&
-                    !data.Map.Runes.Select(rune => new Point(rune.Location.X, rune.Location.Y)).Contains(to))
-                    if (ExecuteHook(to))
-                        return true;
                 if (ExecuteMove(pathFinder.GetNextPoint(Location, to)))
                     return true;
                 if (UnderEffect(PudgeEvent.HookCooldown))

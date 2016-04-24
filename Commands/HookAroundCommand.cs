@@ -8,6 +8,12 @@ namespace PudgeClient
 {
     public class HookAroundCommand : Command
     {
+        public int IterCount;
         public const string TypeName = "HookAroundCommand";
+
+        public HookAroundCommand(int IterCount = int.MaxValue)
+        {
+            this.IterCount = IterCount;
+        }
     }
 }

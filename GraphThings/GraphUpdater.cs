@@ -16,7 +16,7 @@ namespace PudgeClient
         public GraphUpdater(Graph graph)
         {
             this.graph = graph;
-            var timer = new Timer(PudgeRules.Current.RuneRespawnTime * 1000);
+            var timer = new Timer(PudgeRules.Current.RuneRespawnTime * 333);
             timer.AutoReset = true;
             timer.Start();
             timer.Elapsed += ((sender, args) => UpdateRunes());
